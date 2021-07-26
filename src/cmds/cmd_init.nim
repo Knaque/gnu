@@ -1,19 +1,29 @@
 import os, osproc, strutils, common
 
-proc init*(name: string) =
+proc init*(name: string, here = false) =
   ## Initializes a new Godot-Nim project.
 
-  let dirName = name.toLowerAscii.replace(" ", "_")
+  let rootDir =
+    if here: "."
+    else: name.toLowerAscii.replace(" ", "-")
+  let tempDir = rootDir/"temp"
 
   if (
     let errorCode = execCmd(
       "git clone --depth=1 https://github.com/knaque/godot-nim-stub.git $1" %
-        dirName
+        tempDir
     )
     errorCode != 0
   ): quit errorCode
   
-  setCurrentDir(getCurrentDir()/dirName)
+  for dir in ["fonts", "scripts", "src", ".vscode"]:
+    moveDir(tempDir/dir, rootDir/dir)
+  for file in ["default_env.tres", "fps_counter.tscn", "icon.png", "icon.png.import", "main.tscn", "nimlib.gdnlib", "project.godot", "README.md", "scene.tscn", ".gitignore"]:
+    moveFile(tempDir/file, rootDir/file)
+  
+  removeDir(tempDir)
+
+  setCurrentDir(getCurrentDir()/rootDir)
 
   writeFile("project.godot",
 """; Engine configuration file.

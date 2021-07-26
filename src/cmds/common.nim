@@ -25,5 +25,6 @@ proc genGodotApi*() =
   else:
     echo "Godot API already exists; No generation necessary."
 
-proc isValidFS*(): bool =
-  fileExists("project.godot") and fileExists("nimlib.gdnlib") and dirExists("src")
+proc ensureValidFS*() =
+  if not (fileExists("project.godot") and fileExists("nimlib.gdnlib") and dirExists("src")):
+    quit "This file structure appears to be incorrect. Wrong directory?", -1

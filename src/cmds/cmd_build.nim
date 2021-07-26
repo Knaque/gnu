@@ -2,6 +2,9 @@ import common, os, osproc, strutils
 
 proc build*() =
   ## Builds your scripts for the current platform.
+  
+  ensureValidFS()
+
   genGodotApi()
   let bitsPostfix {.used.} = when sizeof(int) == 8: "_64" else: "_32"
   let libFile =

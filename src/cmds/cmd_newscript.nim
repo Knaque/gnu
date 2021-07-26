@@ -14,8 +14,7 @@ proc probableObjName(node: string): string =
 proc newScript*(name: string, node: string) =
   ## Creates a new script.
   
-  if not isValidFS():
-    quit "This file structure appears to be incorrect. Wrong directory?", -1
+  ensureValidFS()
 
   genGodotApi()
 

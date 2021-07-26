@@ -3,8 +3,7 @@ import os, strutils, terminal, common
 proc delScript*(name: string) =
   ## Deletes an existing script.
   
-  if not isValidFS():
-    quit "This file structure appears to be incorrect. Wrong directory?", -1
+  ensureValidFS()
 
   let
     uppername = name.capitalizeAscii

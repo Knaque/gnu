@@ -27,6 +27,9 @@ proc newScript*(name: string, node: string) =
 
   if validNodes.binarySearch(node) == -1:
     quit "'$1' is not a valid node type." % node, -1
+  
+  if fileExists("src/$1.nim" % lowername) or fileExists("scripts/$1.gdns" % uppername):
+    quit "Script '$1' already exists." % uppername, -1
 
   # create the .nim file
   writeFile("src/$1.nim" % lowername,

@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.1.1"
 author        = "Knaque"
 description   = "Godot-Nim Utility - Godot gamedev with Nim"
 license       = "MIT"

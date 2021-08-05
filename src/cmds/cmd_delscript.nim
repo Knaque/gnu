@@ -1,4 +1,4 @@
-import os, strutils, terminal, common
+import os, strutils, terminal, common, sequtils
 
 proc delScript*(name: string) =
   ## Deletes an existing script.
@@ -18,9 +18,11 @@ proc delScript*(name: string) =
     removeFile("src/$1.nim" % lowername)
     removeFile("scripts/$1.gdns" % uppername)
 
-    let contents = readFile("src/stub.nim")
+    var stubLines = toSeq(lines("src/stub.nim"))
+    stubLines = stubLines.filterIt(lowername notin it and it != "")
     var stub = open("src/stub.nim", fmWrite)
-    stub.write(contents.replace("import $1" % lowername, "").replace("\n\n", ""))
+    for line in stubLines:
+      stub.write(line & '\n')
     stub.close()
 
     echo "Successfully deleted script '$1'." % uppername

@@ -18,8 +18,7 @@ proc delScript*(name: string) =
     removeFile("src/$1.nim" % lowername)
     removeFile("scripts/$1.gdns" % uppername)
 
-    var stubLines = toSeq(lines("src/stub.nim"))
-    stubLines = stubLines.filterIt(lowername notin it and it != "")
+    var stubLines = toSeq(lines("src/stub.nim")).filterIt(lowername notin it and it != "")
     var stub = open("src/stub.nim", fmWrite)
     for line in stubLines:
       stub.write(line & '\n')

@@ -78,8 +78,7 @@ class_name = "$1"
   # stub.write "\nimport " & lowername
   # stub.close()
 
-  var stubLines = toSeq(lines("src/stub.nim"))
-  stubLines = stubLines.filterIt(it != "")
+  var stubLines = toSeq(lines("src/stub.nim")).filterIt(it != "")
   var stub = open("src/stub.nim", fmWrite)
   for line in stubLines:
     stub.write(line & '\n')
